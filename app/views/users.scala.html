@@ -1,0 +1,47 @@
+@(users: Seq[User])
+
+@common {
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      @users.map { user =>
+        <tr>
+          <td>@{user.id}</td>
+          <td>
+            <input value="@{user.name}" name="name" form="user-@{user.id}">
+          </td>
+          <td>
+            <form id="user-@{user.id}" method="POST" action="@{routes.AppController.updateUser(user.id)}">
+              <input type="submit">
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="@{routes.AppController.deleteUser(user.id)}">
+              <input type="submit">
+            </form>
+          </td>
+        </tr>
+      }
+      <tr>
+        <td>New</td>
+        <td>
+          <input name="name" form="user-new">
+        </td>
+        <td>
+          <form id="user-new" method="POST" action="@{routes.AppController.createUser}">
+            <input type="submit">
+          </form>
+        </td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+}

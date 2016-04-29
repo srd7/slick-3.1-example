@@ -1,1 +1,5 @@
-GET  /          controllers.AppController.index
+GET  /                      controllers.AppController.index
+GET  /users                 controllers.AppController.users
+POST /users/create          controllers.AppController.createUser
+POST /users/:userId/update  controllers.AppController.updateUser(userId: Int)
+POST /users/:userId/delete  controllers.AppController.deleteUser(userId: Int)
