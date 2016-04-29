@@ -1,5 +1,8 @@
-GET  /                      controllers.AppController.index
-GET  /users                 controllers.AppController.users
-POST /users/create          controllers.AppController.createUser
-POST /users/:userId/update  controllers.AppController.updateUser(userId: Int)
-POST /users/:userId/delete  controllers.AppController.deleteUser(userId: Int)
+GET  /                                  controllers.AppController.index
+GET  /users                             controllers.AppController.users
+POST /users/create                      controllers.AppController.createUser
+POST /users/:userId/update              controllers.AppController.updateUser(userId: Int)
+POST /users/:userId/delete              controllers.AppController.deleteUser(userId: Int)
+GET  /users/:userId                     controllers.AppController.showUser(userId: Int)
+POST /users/:userId/blogs               controllers.AppController.createBlog(userId: Int)
+GET  /users/:userId/blogs/:blogId       controllers.AppController.showBlog(userId: Int, blogId: Int)

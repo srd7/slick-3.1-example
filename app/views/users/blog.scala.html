@@ -1,0 +1,24 @@
+@(blog: Blog, user: User)
+
+@common {
+  <table>
+    <tbody>
+      <tr>
+        <td>Author</td>
+        <td>
+          <a href="@{routes.AppController.showUser(user.id)}">
+            @{user.name}
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td>Title</td>
+        <td>@{blog.title}</td>
+      </tr>
+      <tr>
+        <td>Body</td>
+        <td>@{blog.body}</td>
+      </tr>
+    </tbody>
+  </table>
+}

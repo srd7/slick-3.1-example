@@ -7,6 +7,7 @@
       <tr>
         <th>ID</th>
         <th>Name</th>
+        <th>Blogs</th>
         <th>Update</th>
         <th>Delete</th>
       </tr>
@@ -14,10 +15,15 @@
     <tbody>
       @users.map { user =>
         <tr>
-          <td>@{user.id}</td>
+          <td>
+            <a href="@{routes.AppController.showUser(user.id)}">
+              @{user.id}
+            </a>
+          </td>
           <td>
             <input value="@{user.name}" name="name" form="user-@{user.id}">
           </td>
+          <td>@{user.count}</td>
           <td>
             <form id="user-@{user.id}" method="POST" action="@{routes.AppController.updateUser(user.id)}">
               <input type="submit">
@@ -35,6 +41,7 @@
         <td>
           <input name="name" form="user-new">
         </td>
+        <td></td>
         <td>
           <form id="user-new" method="POST" action="@{routes.AppController.createUser}">
             <input type="submit">

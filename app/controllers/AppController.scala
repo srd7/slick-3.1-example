@@ -31,7 +31,7 @@ class AppController @Inject() (dbConfigProvider: DatabaseConfigProvider) extends
     db.run(
       Query.getAllUser
     ).map(users =>
-      Ok(views.html.users(users))
+      Ok(views.html.users.index(users))
     ).recover(recovery)
   }
 
@@ -72,4 +72,42 @@ class AppController @Inject() (dbConfigProvider: DatabaseConfigProvider) extends
       redirectToUser
     ).recover(recovery)
   }
+
+  def showUser(userId: Int) = Action.async {
+    db.run(
+      Query.getUserWithBlog(userId)
+    ).map {
+      // If user does not exist
+      case None => NotFound(views.html.error("user.not.found"))
+      case Some((user, blogs)) =>
+        Ok(views.html.users.show(user, blogs))
+    }.recover(recovery)
+  }
+
+  def createBlog(userId: Int) = Action.async { implicit request =>
+    AppForm.blogForm.bindFromRequest.fold(
+      { formWithErrors =>
+        Future.successful(Redirect(routes.AppController.showUser(userId)))
+      },
+      { blog =>
+        db.run(
+          Query.createBlog(blog.copy(userId = userId))
+        ).map(_ =>
+          Redirect(routes.AppController.showUser(userId))
+        ).recover(recovery)
+      }
+    )
+  }
+
+  def showBlog(userId: Int, blogId: Int) = Action.async { implicit request =>
+    db.run(
+      Query.getBlogWithUser(blogId)
+    ).map {
+      // If blog does not exist
+      case None => NotFound(views.html.error("blog.not.found"))
+      case Some((blog, user)) =>
+        Ok(views.html.users.blog(blog, user))
+    }.recover(recovery)
+  }
+
 }

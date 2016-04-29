@@ -1,0 +1,72 @@
+@(user: User, blogs: Seq[Blog])
+
+@common {
+  <div>
+    @if(blogs.length > 0) {
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+          </tr>
+        </thead>
+        <tbody>
+          @blogs.map { blog =>
+            <tr>
+              <td>@{blog.id}</td>
+              <td>
+                <a href="@{routes.AppController.showBlog(blog.userId, blog.id)}">
+                  @{blog.title}
+                </a>
+              </td>
+              <td>
+                @if(blog.body.length > 10) {
+                  @{blog.body.substring(0, 10)}...
+                } else {
+                  @blog.body
+                }
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } else {
+      <p>@{user.name} has not written any blogs yet.</p>
+    }
+  </div>
+
+  <div>
+    <p>Let's write blog!!</p>
+    <form method="POST" action="@{routes.AppController.createBlog(user.id)}">
+      <table>
+        <tbody>
+          <tr>
+            <td>Title</td>
+            <td>
+              <input name="title">
+            </td>
+          </tr>
+          <tr>
+            <td>Body</td>
+            <td>
+              <textarea name="body"></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td>Submit</td>
+            <td>
+              <input type="submit">
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </form>
+  <div>
+
+  <div>
+    <a href="@{routes.AppController.users}">
+      Back to user list page...
+    </a>
+  </div>
+}
