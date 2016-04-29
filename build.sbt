@@ -1,7 +1,8 @@
 val dependencies = Seq(
-  jdbc,
   evolutions,
-  "com.typesafe.play" %% "play-slick" % "2.0.0"
+  "com.typesafe.play" %% "play-slick"            % "2.0.0",
+  "com.typesafe.play" %% "play-slick-evolutions" % "2.0.0",
+  "com.h2database"    %  "h2"                    % "1.4.191"
 )
 
 val settings = Seq(
@@ -12,8 +13,7 @@ val settings = Seq(
     "-encoding", "utf8",
     "-Xlint",
     "-Ywarn-dead-code",
-    "-Ywarn-numeric-widen",
-    "-Ywarn-unused"
+    "-Ywarn-numeric-widen"
   ),
   libraryDependencies ++= dependencies
 )
